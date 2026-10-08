@@ -1,16 +1,8 @@
-export type Activity = {
-  slug: string; title: string; date: string; category: string; excerpt: string; body: string; image: string;
-};
-
-export const activities: Activity[] = [
-  { slug:"gotong-royong-lingkungan", title:"Gotong Royong Menjaga Kebersihan Lingkungan Desa", date:"5 Oktober 2026", category:"Kegiatan Warga", excerpt:"Warga bersama pemerintah desa melaksanakan gotong royong untuk menjaga kebersihan lingkungan.", body:"Kegiatan gotong royong dilaksanakan bersama warga sebagai bagian dari upaya menjaga kebersihan, kenyamanan, dan kepedulian terhadap lingkungan desa.", image:"/images/kegiatan-1.svg" },
-  { slug:"rapat-persiapan-kegiatan-desa", title:"Rapat Persiapan Kegiatan Desa", date:"28 September 2026", category:"Pemerintahan", excerpt:"Pemerintah desa bersama unsur masyarakat membahas persiapan kegiatan desa.", body:"Rapat menjadi ruang koordinasi antara pemerintah desa dan masyarakat agar pelaksanaan kegiatan berjalan tertib dan sesuai kebutuhan warga.", image:"/images/kegiatan-2.svg" },
-  { slug:"kegiatan-pemberdayaan-masyarakat", title:"Kegiatan Pemberdayaan Masyarakat", date:"20 September 2026", category:"Pemberdayaan", excerpt:"Kegiatan pemberdayaan masyarakat untuk mendorong partisipasi dan kemandirian warga.", body:"Program pemberdayaan diarahkan untuk memperkuat partisipasi masyarakat serta mendukung potensi lokal Desa Mulyamekar.", image:"/images/kegiatan-3.svg" },
-  { slug:"posyandu-desa", title:"Kegiatan Posyandu di Lingkungan Desa", date:"12 September 2026", category:"Kemasyarakatan", excerpt:"Dokumentasi kegiatan pelayanan kemasyarakatan di lingkungan Desa Mulyamekar.", body:"Kegiatan kemasyarakatan dilaksanakan secara rutin dengan melibatkan kader dan warga di lingkungan desa.", image:"/images/kegiatan-4.svg" }
-];
-
-export const agenda = [
-  {date:"12 Oktober 2026", title:"Gotong Royong Lingkungan", place:"Lingkungan Desa Mulyamekar"},
-  {date:"18 Oktober 2026", title:"Pertemuan Masyarakat Desa", place:"Balai Desa Mulyamekar"},
-  {date:"25 Oktober 2026", title:"Kegiatan Pemberdayaan Warga", place:"Desa Mulyamekar"}
-];
+export type Activity={id?:string;slug:string;title:string;date:string;category:string;excerpt:string;body:string;image:string};
+export type AgendaItem={id?:string;date:string;title:string;place:string};
+export const fallbackActivities:Activity[]=[
+{slug:"gotong-royong-lingkungan",title:"Gotong Royong Menjaga Kebersihan Lingkungan Desa",date:"5 Oktober 2026",category:"Kegiatan Warga",excerpt:"Warga bersama pemerintah desa melaksanakan gotong royong untuk menjaga kebersihan lingkungan.",body:"Kegiatan gotong royong dilaksanakan bersama warga sebagai bagian dari upaya menjaga kebersihan, kenyamanan, dan kepedulian terhadap lingkungan desa.",image:"/images/kegiatan-1.svg"},
+{slug:"rapat-persiapan-kegiatan-desa",title:"Rapat Persiapan Kegiatan Desa",date:"28 September 2026",category:"Pemerintahan",excerpt:"Pemerintah desa bersama unsur masyarakat membahas persiapan kegiatan desa.",body:"Rapat menjadi ruang koordinasi antara pemerintah desa dan masyarakat agar pelaksanaan kegiatan berjalan tertib dan sesuai kebutuhan warga.",image:"/images/kegiatan-2.svg"},
+{slug:"kegiatan-pemberdayaan-masyarakat",title:"Kegiatan Pemberdayaan Masyarakat",date:"20 September 2026",category:"Pemberdayaan",excerpt:"Kegiatan pemberdayaan masyarakat untuk mendorong partisipasi dan kemandirian warga.",body:"Program pemberdayaan diarahkan untuk memperkuat partisipasi masyarakat serta mendukung potensi lokal Desa Mulyamekar.",image:"/images/kegiatan-3.svg"},
+{slug:"posyandu-desa",title:"Kegiatan Posyandu di Lingkungan Desa",date:"12 September 2026",category:"Kemasyarakatan",excerpt:"Dokumentasi kegiatan pelayanan kemasyarakatan di lingkungan Desa Mulyamekar.",body:"Kegiatan kemasyarakatan dilaksanakan secara rutin dengan melibatkan kader dan warga di lingkungan desa.",image:"/images/kegiatan-4.svg"}];
+export const fallbackAgenda:AgendaItem[]=[{date:"12 Oktober 2026",title:"Gotong Royong Lingkungan",place:"Lingkungan Desa Mulyamekar"},{date:"18 Oktober 2026",title:"Pertemuan Masyarakat Desa",place:"Balai Desa Mulyamekar"},{date:"25 Oktober 2026",title:"Kegiatan Pemberdayaan Warga",place:"Desa Mulyamekar"}];

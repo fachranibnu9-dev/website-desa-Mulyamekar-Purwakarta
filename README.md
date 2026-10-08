@@ -1,47 +1,18 @@
-# Website Desa Mulyamekar
+# Website Desa Mulyamekar — Publik + Admin
 
-Website informasi publik Desa Mulyamekar, Kecamatan Babakancikao, Kabupaten Purwakarta, Jawa Barat.
+Versi ini mempertahankan website publik sederhana dan menambahkan `/admin` untuk pengelola. Admin dapat login, menambah/mengubah/menghapus kegiatan dan agenda, serta upload foto.
 
-## Konsep
-Website ini sengaja dibuat sederhana untuk masyarakat:
-- Beranda
-- Pencarian informasi langsung di website
-- Kegiatan & berita
-- Detail kegiatan
-- Agenda
-- Galeri
-- Profil desa
-- Pemerintahan
-- Potensi desa
-- Transparansi
-- Kontak
+## Supabase
+Supabase dipakai hanya sebagai backend di belakang website agar login dan data admin tersimpan permanen. Warga tidak perlu akun.
 
-Tidak menggunakan Supabase, login warga, database, WhatsApp API, atau aplikasi eksternal.
+1. Buat project gratis di https://supabase.com/
+2. Jalankan `supabase-schema.sql` di SQL Editor.
+3. Authentication > Users > buat satu user admin email/password.
+4. Storage > buat bucket `gallery` dan aktifkan Public bucket.
+5. Ambil Project URL dan anon/publishable key.
+6. Di Vercel tambahkan environment variables `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
 
-## Menjalankan
-Pastikan Node.js terpasang.
+## Lokal
+`npm install` lalu `npm run dev`. Admin: `/admin`.
 
-```bash
-npm install
-npm run dev
-```
-
-Buka `http://localhost:3000`.
-
-Untuk produksi:
-```bash
-npm run build
-npm start
-```
-
-## Mengubah isi website
-Data kegiatan contoh berada di:
-`lib/data.ts`
-
-Ganti judul, tanggal, kategori, deskripsi, dan gambar sesuai kegiatan Desa Mulyamekar.
-Gambar contoh berada di:
-`public/images/`
-
-Untuk logo resmi, ganti bagian logo `DM` pada:
-`components/public/Navbar.tsx`
-dengan file logo resmi desa/kabupaten.
+Jangan pernah upload `.env.local` atau password admin ke GitHub.

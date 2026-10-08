@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { ArrowRight, CalendarDays, Images, MapPin } from "lucide-react";
 import SearchActivities from "@/components/SearchActivities";
-import { activities } from "@/lib/data";
+import { getActivities } from "@/lib/public-data";
 
-export default function Home() {
+export default async function Home() {
+  const activities = await getActivities();
   return <main>
     <section className="bg-emerald-800 text-white">
       <div className="container-page grid gap-10 py-16 md:grid-cols-2 md:items-center md:py-24">

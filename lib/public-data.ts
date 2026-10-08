@@ -1,0 +1,3 @@
+import {supabase} from "./supabase"; import {fallbackActivities,fallbackAgenda,Activity,AgendaItem} from "./data";
+export async function getActivities():Promise<Activity[]>{if(!supabase)return fallbackActivities;const {data,error}=await supabase.from("activities").select("*").order("created_at",{ascending:false});return error||!data?.length?fallbackActivities:data;}
+export async function getAgenda():Promise<AgendaItem[]>{if(!supabase)return fallbackAgenda;const {data,error}=await supabase.from("agenda").select("*").order("created_at",{ascending:false});return error||!data?.length?fallbackAgenda:data;}

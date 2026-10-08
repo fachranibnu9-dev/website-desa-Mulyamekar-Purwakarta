@@ -1,9 +1,3 @@
-import { notFound } from "next/navigation";
-import Link from "next/link";
-import { activities } from "@/lib/data";
-
-export function generateStaticParams(){return activities.map(a=>({slug:a.slug}));}
-export default async function Detail({params}:{params:Promise<{slug:string}>}) {
-  const {slug}=await params; const item=activities.find(a=>a.slug===slug); if(!item) notFound();
-  return <main className="container-page py-14"><Link href="/berita" className="font-bold text-emerald-700">← Kembali ke kegiatan</Link><article className="mx-auto mt-6 max-w-4xl"><img src={item.image} alt="" className="h-72 w-full rounded-3xl object-cover md:h-96"/><div className="mt-7"><div className="text-sm font-bold text-emerald-700">{item.category} · {item.date}</div><h1 className="mt-2 text-4xl font-black leading-tight">{item.title}</h1><p className="mt-6 text-lg leading-8 text-slate-600">{item.body}</p></div></article></main>;
-}
+"use client";
+import{useEffect,useState}from"react";import Link from"next/link";import{useParams}from"next/navigation";import{supabase}from"@/lib/supabase";import{fallbackActivities,Activity}from"@/lib/data";
+export default function Page(){const{slug}=useParams<{slug:string}>();const[item,setItem]=useState<Activity|undefined>(()=>fallbackActivities.find(a=>a.slug===slug));useEffect(()=>{(async()=>{if(supabase){const{data}=await supabase.from("activities").select("*").eq("slug",slug).maybeSingle();if(data)setItem(data)}})()},[slug]);if(!item)return <main className="container-page py-14"><h1 className="text-3xl font-black">Informasi tidak ditemukan</h1><Link className="mt-4 inline-block font-bold text-emerald-700" href="/berita">← Kembali</Link></main>;return <main className="container-page py-14"><Link href="/berita" className="font-bold text-emerald-700">← Kembali ke kegiatan</Link><article className="mx-auto mt-6 max-w-4xl"><img src={item.image} alt="" className="h-72 w-full rounded-3xl object-cover md:h-96"/><div className="mt-7"><div className="text-sm font-bold text-emerald-700">{item.category} · {item.date}</div><h1 className="mt-2 text-4xl font-black leading-tight">{item.title}</h1><p className="mt-6 text-lg leading-8 text-slate-600">{item.body}</p></div></article></main>}
