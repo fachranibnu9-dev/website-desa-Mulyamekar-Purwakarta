@@ -1,2 +1,65 @@
-"use client";import{FormEvent,useEffect,useState}from"react";import{useRouter}from"next/navigation";import Link from"next/link";import{LockKeyhole,LogIn}from"lucide-react";import{supabase}from"@/lib/supabase";
-export default function Page(){const r=useRouter();const[email,setEmail]=useState("");const[pw,setPw]=useState("");const[err,setErr]=useState("");const[loading,setLoading]=useState(false);useEffect(()=>{supabase?.auth.getSession().then(({data})=>{if(data.session)r.replace("/admin/dashboard")})},[r]);async function submit(e:FormEvent){e.preventDefault();setErr("");setLoading(true);if(!supabase){setErr("Admin belum dikonfigurasi. Hubungkan Supabase terlebih dahulu.");setLoading(false);return}const{error}=await supabase.auth.signInWithPassword({email,password:pw});if(error)setErr(error.message);else r.replace("/admin/dashboard");setLoading(false)}return <main className="grid min-h-[calc(100vh-64px)] place-items-center bg-slate-100 px-4"><form onSubmit={submit} className="w-full max-w-md rounded-3xl border bg-white p-8 shadow-sm"><div className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-emerald-100 text-emerald-700"><LockKeyhole/></div><h1 className="mt-5 text-center text-2xl font-black">Admin Desa Mulyamekar</h1><p className="mt-2 text-center text-sm text-slate-500">Khusus pengelola website.</p><label className="mt-6 block text-sm font-bold">Email<input className="mt-2 w-full rounded-xl border p-3" type="email" value={email} onChange={e=>setEmail(e.target.value)} required/></label><label className="mt-4 block text-sm font-bold">Password<input className="mt-2 w-full rounded-xl border p-3" type="password" value={pw} onChange={e=>setPw(e.target.value)} required/></label>{err&&<div className="mt-4 rounded-xl bg-red-50 p-3 text-sm text-red-700">{err}</div>}<button disabled={loading} className="btn mt-6 w-full bg-emerald-700 text-white"><LogIn size={18}/>{loading?"Memproses...":"Masuk"}</button><Link href="/" className="mt-4 block text-center text-sm text-slate-500">← Kembali</Link></form></main>}
+'use client'
+
+import { FormEvent, useEffect, useState } from 'react'
+import { getSupabase } from '@/lib/supabase/client'
+
+export default function AdminLogin() {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    try {
+      const supabase = getSupabase()
+      supabase.auth.getSession().then(({ data }) => {
+        if (data.session) window.location.href = '/admin/dashboard'
+      })
+    } catch {}
+  }, [])
+
+  async function submit(e: FormEvent) {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+    try {
+      const supabase = getSupabase()
+      const { error } = await supabase.auth.signInWithPassword({ email, password })
+      if (error) throw error
+      window.location.href = '/admin/dashboard'
+    } catch (err: any) {
+      setError(err?.message || 'Email atau password tidak benar.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <main className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+      <div className="w-full max-w-md rounded-2xl bg-white border shadow-sm p-8">
+        <div className="mb-8">
+          <p className="text-sm font-semibold text-emerald-700">ADMIN DESA</p>
+          <h1 className="text-3xl font-bold text-slate-900 mt-2">Desa Mulyamekar</h1>
+          <p className="text-slate-500 mt-2">Masuk untuk mengelola kegiatan dan agenda website.</p>
+        </div>
+        <form onSubmit={submit} className="space-y-4">
+          <label className="block">
+            <span className="text-sm font-medium text-slate-700">Email admin</span>
+            <input required type="email" value={email} onChange={e=>setEmail(e.target.value)}
+              className="mt-1 w-full rounded-xl border px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-500" />
+          </label>
+          <label className="block">
+            <span className="text-sm font-medium text-slate-700">Password</span>
+            <input required type="password" value={password} onChange={e=>setPassword(e.target.value)}
+              className="mt-1 w-full rounded-xl border px-4 py-3 outline-none focus:ring-2 focus:ring-emerald-500" />
+          </label>
+          {error && <div className="rounded-xl bg-red-50 border border-red-200 text-red-700 p-3 text-sm">{error}</div>}
+          <button disabled={loading} className="w-full rounded-xl bg-emerald-700 text-white py-3 font-semibold disabled:opacity-60">
+            {loading ? 'Memeriksa...' : 'Masuk ke Admin'}
+          </button>
+        </form>
+        <a href="/" className="block text-center mt-6 text-sm text-slate-500 hover:text-emerald-700">← Kembali ke website</a>
+      </div>
+    </main>
+  )
+}
